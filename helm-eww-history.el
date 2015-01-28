@@ -18,6 +18,14 @@
   :group 'eww
   :group 'helm)
 
+(defun helm-eww-history-longest (strs)
+  (seq-reduce
+   (lambda (a b)
+     (cl-letf* ((al (string-width a))
+                (bl (string-width b)))
+       (if (< al bl)  b a)))
+   strs ""))
+
 (cl-defun helm-eww-history-init ()
   (unless eww-history
     (user-error "No history"))
@@ -25,17 +33,31 @@
         (helm-eww-history-create-candidates)))
 
 (cl-defun helm-eww-history-create-candidates ()
-  (seq-map
-   (lambda (hist)
-     (cons
-      (seq-concatenate 'string
-                       (propertize (cl-getf hist :title)
-                                   'face 'helm-eww-history-title)
-                       " "
-                       (propertize (cl-getf hist :url)
-                                   'face 'helm-eww-history-url))
-      hist))
-   eww-history))
+  (cl-letf ((longest-width
+             (string-width
+              (helm-eww-history-longest
+               (seq-map
+                (lambda (hist)
+                  (cl-getf hist :title))
+                eww-history))))
+            (padding (make-string 2 ?\s)))
+    (seq-map
+     (lambda (hist)
+       (cons
+        (seq-concatenate 'string
+                         (format
+                          (concat "%-"
+                                  (number-to-string longest-width)
+                                  "."
+                                  (number-to-string longest-width)
+                                  "s")
+                          (propertize (cl-getf hist :title)
+                                      'face 'helm-eww-history-title))
+                         padding
+                         (propertize (cl-getf hist :url)
+                                     'face 'helm-eww-history-url))
+        hist))
+     eww-history)))
 
 (cl-defun helm-eww-history-action-browse (candidate)
   (eww-browse-url (cl-getf candidate :url)))
