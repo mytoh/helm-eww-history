@@ -26,6 +26,8 @@
        (if (< al bl)  b a)))
    strs ""))
 
+(defvar helm-eww-history-candidates nil)
+
 (cl-defun helm-eww-history-init ()
   (unless eww-history
     (user-error "No history"))
