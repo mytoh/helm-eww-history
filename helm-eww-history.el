@@ -2,18 +2,17 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl-lib))
+(require 'cl-lib)
 (require 'seq)
 
 (defface helm-eww-history-title
-    '((t :inherit font-lock-preprocessor-face))
+  '((t :inherit font-lock-preprocessor-face))
   "face for history title"
   :group 'eww
   :group 'helm)
 
 (defface helm-eww-history-url
-    '((t :inherit font-lock-builtin-face))
+  '((t :inherit font-lock-builtin-face))
   "face for history title"
   :group 'eww
   :group 'helm)
