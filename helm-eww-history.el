@@ -4,6 +4,7 @@
 
 (require 'cl-lib)
 (require 'seq)
+(require 'helm)
 
 (defface helm-eww-history-title
   '((t :inherit font-lock-preprocessor-face))
