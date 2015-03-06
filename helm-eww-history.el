@@ -74,8 +74,8 @@
    (candidates :initform helm-eww-history-candidates)
    (action :initform
            (helm-make-actions
-            "Browse history page" 'helm-eww-history-action-browse
-            "Copy url" 'helm-eww-history-action-copy-url))))
+            "Browse history page" #'helm-eww-history-action-browse
+            "Copy url" #'helm-eww-history-action-copy-url))))
 
 (defvar helm-source-eww-history
   (helm-make-source "History"
