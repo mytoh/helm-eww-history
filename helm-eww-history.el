@@ -70,7 +70,7 @@
     (message "copied %s" url)))
 
 (defclass helm-eww-history-source (helm-source-sync)
-  ((init :initform helm-eww-history-init)
+  ((init :initform #'helm-eww-history-init)
    (candidates :initform helm-eww-history-candidates)
    (action :initform
            (helm-make-actions
